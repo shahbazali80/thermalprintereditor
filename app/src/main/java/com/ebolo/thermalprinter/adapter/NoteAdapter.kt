@@ -3,6 +3,7 @@ package com.example.thermalprinter.adapter
 import android.app.AlertDialog
 import android.app.Application
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.text.Html
 import android.view.LayoutInflater
@@ -51,7 +52,7 @@ class NoteAdapter(val context: Context) : RecyclerView.Adapter<NoteAdapter.ViewH
         holder.noteTV.text = title
         holder.dateTV.text = noteDate
 
-        holder.idImgEdit.setOnClickListener {
+        holder.itemView.setOnClickListener {
             val intent = Intent(context, MainActivity::class.java)
             intent.putExtra("isNew", "0")
             intent.putExtra("noteTitle", title)
@@ -59,6 +60,10 @@ class NoteAdapter(val context: Context) : RecyclerView.Adapter<NoteAdapter.ViewH
             intent.putExtra("noteDate", noteDate)
             intent.putExtra("noteId", id)
             context.startActivity(intent)
+        }
+
+        holder.idImgEdit.setOnClickListener {
+
         }
 
         holder.idImgDel.setOnClickListener {
