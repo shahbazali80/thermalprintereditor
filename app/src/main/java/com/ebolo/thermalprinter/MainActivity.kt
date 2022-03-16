@@ -33,10 +33,11 @@ import com.ebolo.thermalprintereditor.ui.widgets.EditorButton.Companion.IMAGE
 import com.esafirm.imagepicker.features.ImagePicker
 import com.google.android.material.snackbar.Snackbar
 import com.karumi.dexter.Dexter
-import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
+import com.karumi.dexter.listener.PermissionDeniedResponse
+import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
-import com.karumi.dexter.listener.multi.MultiplePermissionsListener
+import com.karumi.dexter.listener.single.PermissionListener
 import io.paperdb.Paper
 import org.jetbrains.anko.setContentView
 import java.text.SimpleDateFormat
@@ -84,8 +85,9 @@ class MainActivity : AppCompatActivity() {
         getValuesForUpdateDelete()
 
         initializeBluetoothOrRequestPermission()
+        //initializeBluetooth()
 
-      //  openDexter()
+        openDexter()
 
         viewModal = ViewModelProvider(
             this,
@@ -142,33 +144,19 @@ class MainActivity : AppCompatActivity() {
             .commit()
     }
 
-
-//    <uses-permission
-//    android:name="android.permission.BLUETOOTH_ADMIN"
-//    android:maxSdkVersion="30" />
-//    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
-//    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
-//    <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" />
-//    <uses-permission android:name="android.permission.INTERNET" />
-//
-//    <uses-permission
-//    android:name="android.permission.BLUETOOTH"
-//    />
-
     private fun openDexter() {
         Dexter.withContext(this)
-            .withPermissions(
-                Manifest.permission.BLUETOOTH_ADMIN,
-                Manifest.permission.BLUETOOTH_CONNECT,
-                Manifest.permission.BLUETOOTH_SCAN,
-                Manifest.permission.BLUETOOTH_ADVERTISE,
-            ).withListener(object : MultiplePermissionsListener {
-                override fun onPermissionsChecked(report: MultiplePermissionsReport) { /* ... */
+            .withPermission(Manifest.permission.BLUETOOTH)
+            .withListener(object : PermissionListener {
+                override fun onPermissionGranted(response: PermissionGrantedResponse) { /* ... */
+                }
+
+                override fun onPermissionDenied(response: PermissionDeniedResponse) { /* ... */
                 }
 
                 override fun onPermissionRationaleShouldBeShown(
-                    permissions: List<PermissionRequest>,
-                    token: PermissionToken
+                    permission: PermissionRequest?,
+                    token: PermissionToken?
                 ) { /* ... */
                 }
             }).check()
@@ -320,31 +308,21 @@ class MainActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
     }
 
-
+    @RequiresApi(Build.VERSION_CODES.M)
     private fun initializeBluetoothOrRequestPermission() {
         val requiredPermissions = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
-            listOf(Manifest.permission.BLUETOOTH_CONNECT, Manifest.permission.BLUETOOTH_SCAN)
+            listOf(Manifest.permission.ACCESS_FINE_LOCATION)
         } else {
             listOf(Manifest.permission.BLUETOOTH_CONNECT, Manifest.permission.BLUETOOTH_SCAN)
         }
 
         val missingPermissions = requiredPermissions.filter { permission ->
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                checkSelfPermission(permission) != PackageManager.PERMISSION_GRANTED
-            } else {
-                TODO("VERSION.SDK_INT < M")
-            }
+            checkSelfPermission(permission) != PackageManager.PERMISSION_GRANTED
         }
         if (missingPermissions.isEmpty()) {
-            Log.d("permission", "First Called")
             initializeBluetooth()
         } else {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                requestPermissions(missingPermissions.toTypedArray(), BLUETOOTH_PERMISSION_REQUEST_CODE)
-            }else{
-
-            }
-
+            requestPermissions(missingPermissions.toTypedArray(), BLUETOOTH_PERMISSION_REQUEST_CODE)
         }
     }
 
@@ -358,10 +336,9 @@ class MainActivity : AppCompatActivity() {
                 if (grantResults.none { it != PackageManager.PERMISSION_GRANTED }) {
                     // all permissions are granted
                     initializeBluetooth()
-                    isPermissionAllow = true
                 } else {
                     // some permissions are not granted
-                    isPermissionAllow = false
+                    Toast.makeText(this, "permissions are not granted", Toast.LENGTH_SHORT).show()
                 }
             }
             else -> super.onRequestPermissionsResult(requestCode, permissions, grantResults)
