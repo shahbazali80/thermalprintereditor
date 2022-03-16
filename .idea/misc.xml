@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Shahbaz/KRichEditor/app/src/main/res/drawable-v24/custom_circle_img.xml" value="0.226" />
+        <entry key="..\:/Shahbaz/KRichEditor/app/src/main/res/drawable/ic_baseline_close_24.xml" value="0.226" />
+        <entry key="..\:/Shahbaz/KRichEditor/app/src/main/res/drawable/ic_baseline_delete_24.xml" value="0.2225" />
+        <entry key="..\:/Shahbaz/KRichEditor/app/src/main/res/drawable/ic_baseline_edit_24.xml" value="0.2225" />
+        <entry key="..\:/Shahbaz/KRichEditor/app/src/main/res/drawable/ic_baseline_local_printshop_24.xml" value="0.226" />
+        <entry key="..\:/Shahbaz/KRichEditor/app/src/main/res/drawable/ic_baseline_more_vert_24.xml" value="0.226" />
+        <entry key="..\:/Shahbaz/KRichEditor/app/src/main/res/layout/activity_java.xml" value="0.36666666666666664" />
+        <entry key="..\:/Shahbaz/KRichEditor/app/src/main/res/layout/activity_note_list.xml" value="0.36666666666666664" />
+        <entry key="..\:/Shahbaz/KRichEditor/app/src/main/res/layout/activity_splash_screen.xml" value="0.36666666666666664" />
+        <entry key="..\:/Shahbaz/KRichEditor/app/src/main/res/layout/bt_device_layout.xml" value="0.36666666666666664" />
+        <entry key="..\:/Shahbaz/KRichEditor/app/src/main/res/layout/content_java.xml" value="0.36666666666666664" />
+        <entry key="..\:/Shahbaz/KRichEditor/app/src/main/res/layout/edit_toolbar_dialog.xml" value="0.36666666666666664" />
+        <entry key="..\:/Shahbaz/KRichEditor/app/src/main/res/layout/note_layout.xml" value="0.36666666666666664" />
+        <entry key="..\:/Shahbaz/KRichEditor/app/src/main/res/menu/menu_main.xml" value="0.36666666666666664" />
+        <entry key="..\:/Shahbaz/KRichEditor/app/src/main/res/menu/menu_main_printer.xml" value="0.36666666666666664" />
+        <entry key="..\:/Shahbaz/KRichEditor/krichtexteditor/src/main/res/drawable-v21/btn_white_material.xml" value="0.226" />
+        <entry key="..\:/Shahbaz/KRichEditor/krichtexteditor/src/main/res/drawable/round_rectangle_blue.xml" value="0.226" />
+        <entry key="..\:/Shahbaz/KRichEditor/krichtexteditor/src/main/res/menu/font_sizes_menu.xml" value="0.36666666666666664" />
+        <entry key="..\:/Shahbaz/Thermal Printer/app/src/main/res/layout/activity_note_list.xml" value="0.36666666666666664" />
+        <entry key="..\:/Shahbaz/Thermal Printer/krichtexteditor/src/main/res/menu/font_sizes_menu.xml" value="0.36666666666666664" />
+      </map>
+    </option>
+  </component>
+  <component name="NullableNotNullManager">
+    <option name="myDefaultNullable" value="android.support.annotation.Nullable" />
+    <option name="myDefaultNotNull" value="android.support.annotation.NonNull" />
+    <option name="myNullables">
+      <value>
+        <list size="15">
+          <item index="0" class="java.lang.String" itemvalue="org.jetbrains.annotations.Nullable" />
+          <item index="1" class="java.lang.String" itemvalue="javax.annotation.Nullable" />
+          <item index="2" class="java.lang.String" itemvalue="javax.annotation.CheckForNull" />
+          <item index="3" class="java.lang.String" itemvalue="edu.umd.cs.findbugs.annotations.Nullable" />
+          <item index="4" class="java.lang.String" itemvalue="android.support.annotation.Nullable" />
+          <item index="5" class="java.lang.String" itemvalue="androidx.annotation.Nullable" />
+          <item index="6" class="java.lang.String" itemvalue="androidx.annotation.RecentlyNullable" />
+          <item index="7" class="java.lang.String" itemvalue="android.annotation.Nullable" />
+          <item index="8" class="java.lang.String" itemvalue="org.checkerframework.checker.nullness.qual.Nullable" />
+          <item index="9" class="java.lang.String" itemvalue="org.checkerframework.checker.nullness.compatqual.NullableDecl" />
+          <item index="10" class="java.lang.String" itemvalue="org.checkerframework.checker.nullness.compatqual.NullableType" />
+          <item index="11" class="java.lang.String" itemvalue="com.android.annotations.Nullable" />
+          <item index="12" class="java.lang.String" itemvalue="org.eclipse.jdt.annotation.Nullable" />
+          <item index="13" class="java.lang.String" itemvalue="io.reactivex.annotations.Nullable" />
+          <item index="14" class="java.lang.String" itemvalue="io.reactivex.rxjava3.annotations.Nullable" />
+        </list>
+      </value>
+    </option>
+    <option name="myNotNulls">
+      <value>
+        <list size="14">
+          <item index="0" class="java.lang.String" itemvalue="org.jetbrains.annotations.NotNull" />
+          <item index="1" class="java.lang.String" itemvalue="javax.annotation.Nonnull" />
+          <item index="2" class="java.lang.String" itemvalue="edu.umd.cs.findbugs.annotations.NonNull" />
+          <item index="3" class="java.lang.String" itemvalue="android.support.annotation.NonNull" />
+          <item index="4" class="java.lang.String" itemvalue="androidx.annotation.NonNull" />
+          <item index="5" class="java.lang.String" itemvalue="androidx.annotation.RecentlyNonNull" />
+          <item index="6" class="java.lang.String" itemvalue="android.annotation.NonNull" />
+          <item index="7" class="java.lang.String" itemvalue="org.checkerframework.checker.nullness.qual.NonNull" />
+          <item index="8" class="java.lang.String" itemvalue="org.checkerframework.checker.nullness.compatqual.NonNullDecl" />
+          <item index="9" class="java.lang.String" itemvalue="org.checkerframework.checker.nullness.compatqual.NonNullType" />
+          <item index="10" class="java.lang.String" itemvalue="com.android.annotations.NonNull" />
+          <item index="11" class="java.lang.String" itemvalue="org.eclipse.jdt.annotation.NonNull" />
+          <item index="12" class="java.lang.String" itemvalue="io.reactivex.annotations.NonNull" />
+          <item index="13" class="java.lang.String" itemvalue="io.reactivex.rxjava3.annotations.NonNull" />
+        </list>
+      </value>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+</project>

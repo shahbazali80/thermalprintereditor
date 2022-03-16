@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Thermal Printer</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_done">Done</string>
+    <string name="action_html">Show HTML</string>
+    <string name="action_text">Show text</string>
+    <string name="action_set_html">Set HTML</string>
+    <string name="action_save_content">Save content</string>
+    <string name="find_printer">Find Printer</string>
+    <string name="save">Save</string>
+    <string name="delete">Delete</string>
+</resources>

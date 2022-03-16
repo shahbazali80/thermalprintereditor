@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Thermal_Printer.iml" filepath="$PROJECT_DIR$/.idea/modules/Thermal_Printer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Thermal_Printer.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Thermal_Printer.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/escposprinter/Thermal_Printer.escposprinter.iml" filepath="$PROJECT_DIR$/.idea/modules/escposprinter/Thermal_Printer.escposprinter.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/krichtexteditor/Thermal_Printer.krichtexteditor.iml" filepath="$PROJECT_DIR$/.idea/modules/krichtexteditor/Thermal_Printer.krichtexteditor.iml" />
+    </modules>
+  </component>
+</project>
