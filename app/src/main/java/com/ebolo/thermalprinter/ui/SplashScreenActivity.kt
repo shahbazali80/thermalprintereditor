@@ -1,9 +1,10 @@
-package com.ebolo.thermalprinter
+package com.ebolo.thermalprinter.ui
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import com.ebolo.thermalprinter.R
 
 class SplashScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

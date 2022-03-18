@@ -1,4 +1,4 @@
-package com.ebolo.thermalprinter;
+package com.ebolo.thermalprinter.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.ebolo.thermalprinter.R;
 import com.ebolo.thermalprintereditor.RichEditor;
 import com.ebolo.thermalprintereditor.fragments.KRichEditorFragment;
 import com.ebolo.thermalprintereditor.fragments.Options;
@@ -17,8 +18,6 @@ import com.esafirm.imagepicker.features.ImagePicker;
 import com.esafirm.imagepicker.model.Image;
 
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Arrays;
 
 import io.paperdb.Paper;
 

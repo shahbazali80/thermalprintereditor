@@ -12,8 +12,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
-import com.ebolo.thermalprinter.MainActivity
-import com.ebolo.thermalprinter.NoteListActivity
+import com.ebolo.thermalprinter.ui.MainActivity
+import com.ebolo.thermalprinter.ui.NoteListActivity
 import com.ebolo.thermalprinter.R
 import com.ebolo.thermalprinter.models.NoteModel
 import com.ebolo.thermalprinter.viewmodel.NoteViewModel

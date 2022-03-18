@@ -1,4 +1,4 @@
-package com.ebolo.thermalprinter
+package com.ebolo.thermalprinter.ui
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -18,6 +18,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.ebolo.thermalprinter.R
 import com.ebolo.thermalprinter.models.NoteModel
 import com.ebolo.thermalprinter.viewmodel.NoteViewModel
 import com.ebolo.thermalprinter.adapter.NoteAdapter
@@ -152,6 +153,7 @@ class NoteListActivity : AppCompatActivity(), NoteAdapter.NoteClickInterface {
         val inflater = this.layoutInflater
         val dialogView = inflater.inflate(R.layout.edit_toolbar_dialog, null)
         dialogBuilder.setView(dialogView)
+        dialogBuilder.setCancelable(false)
 
         val etToolbar = dialogView.findViewById(R.id.et_toolbar_edit) as EditText
 

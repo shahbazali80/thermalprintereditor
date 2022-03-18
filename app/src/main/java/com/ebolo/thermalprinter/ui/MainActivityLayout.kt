@@ -1,7 +1,8 @@
-package com.ebolo.thermalprinter
+package com.ebolo.thermalprinter.ui
 
 import android.os.Build
 import android.util.TypedValue
+import com.ebolo.thermalprinter.R
 import org.jetbrains.anko.*
 import org.jetbrains.anko.appcompat.v7.themedToolbar
 
@@ -13,7 +14,8 @@ class MainActivityLayout: AnkoComponent<MainActivity> {
              */
             val toolbar = themedToolbar(R.style.AppTheme_AppBarOverlay) {
                 backgroundColorResource = R.color.appcolor
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) popupTheme = R.style.AppTheme_PopupOverlay
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) popupTheme =
+                    R.style.AppTheme_PopupOverlay
             }.lparams(width = matchParent) {
                 val tv = TypedValue()
                 if (ui.owner.theme.resolveAttribute(R.attr.actionBarSize, tv, true)) {

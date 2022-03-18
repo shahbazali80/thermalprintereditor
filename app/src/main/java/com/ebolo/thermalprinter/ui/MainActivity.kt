@@ -1,13 +1,10 @@
-package com.ebolo.thermalprinter
+package com.ebolo.thermalprinter.ui
 
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.bluetooth.BluetoothAdapter
-import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
-import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -15,10 +12,7 @@ import android.text.Html
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import android.widget.EditText
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -26,6 +20,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.dantsu.escposprinter.connection.DeviceConnection
 import com.dantsu.escposprinter.connection.bluetooth.BluetoothConnection
 import com.dantsu.escposprinter.connection.bluetooth.BluetoothPrintersConnections
+import com.ebolo.thermalprinter.R
 import com.ebolo.thermalprinter.async.AsyncBluetoothEscPosPrint
 import com.ebolo.thermalprinter.async.AsyncEscPosPrint
 import com.ebolo.thermalprinter.async.AsyncEscPosPrinter
@@ -37,12 +32,6 @@ import com.ebolo.thermalprintereditor.ui.widgets.EditorButton
 import com.ebolo.thermalprintereditor.ui.widgets.EditorButton.Companion.IMAGE
 import com.esafirm.imagepicker.features.ImagePicker
 import com.google.android.material.snackbar.Snackbar
-import com.karumi.dexter.Dexter
-import com.karumi.dexter.PermissionToken
-import com.karumi.dexter.listener.PermissionDeniedResponse
-import com.karumi.dexter.listener.PermissionGrantedResponse
-import com.karumi.dexter.listener.PermissionRequest
-import com.karumi.dexter.listener.single.PermissionListener
 import io.paperdb.Paper
 import org.jetbrains.anko.setContentView
 import java.text.SimpleDateFormat
