@@ -90,4 +90,18 @@
         app:srcCompat="@drawable/ad_icon"
         app:tint="@color/white" />
 
+    <TextView
+        android:id="@+id/tv_emptyList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Empty List"
+        android:textSize="20dp"
+        android:textColor="#515151"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/note_recyclerview"
+        app:layout_constraintStart_toStartOf="@+id/note_recyclerview"
+        app:layout_constraintTop_toTopOf="@+id/note_recyclerview"
+        app:layout_constraintVertical_bias="0.43" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

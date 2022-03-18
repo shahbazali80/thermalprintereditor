@@ -4,7 +4,10 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.bluetooth.BluetoothAdapter
+import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -13,7 +16,9 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.EditText
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -50,8 +55,6 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var mBluetoothAdapter: BluetoothAdapter
 
-    private val BLUETOOTH_PERMISSION_REQUEST_CODE = 9999
-
     @Volatile
     var isPrinterConnect = false
 
@@ -60,6 +63,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var viewModal: NoteViewModel
     var noteID = -1
 
+    var alertMsg: String? = null
     var noteTitle: String? = null
     var noteDescription: String? = null
     private var noteDate: String? = null
@@ -82,12 +86,29 @@ class MainActivity : AppCompatActivity() {
         if (noteTitle != null)
             supportActionBar!!.title = noteTitle
 
+        alertMsg = if(isNew=="0")
+            "Update"
+        else
+            "Save"
+
         getValuesForUpdateDelete()
 
-        initializeBluetoothOrRequestPermission()
-        //initializeBluetooth()
+        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
 
-        openDexter()
+        isPermissionAllow = if (ContextCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT) == PackageManager.PERMISSION_GRANTED
+            && ContextCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_ADVERTISE) == PackageManager.PERMISSION_GRANTED
+            && ContextCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_SCAN) == PackageManager.PERMISSION_GRANTED) {
+            initializeBluetooth()
+            true
+        } else {
+            false
+        }
+
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.R){
+            initializeBluetooth()
+            isPermissionAllow = true
+        }
+
 
         viewModal = ViewModelProvider(
             this,
@@ -113,7 +134,7 @@ class MainActivity : AppCompatActivity() {
                     EditorButton.JUSTIFY_LEFT,
                     EditorButton.JUSTIFY_CENTER,
                     EditorButton.JUSTIFY_RIGHT,
-                    EditorButton.JUSTIFY_FULL,
+                    //EditorButton.JUSTIFY_FULL,
                     //EditorButton.ORDERED,
                     //EditorButton.UNORDERED,
                     //EditorButton.CHECK,
@@ -142,24 +163,6 @@ class MainActivity : AppCompatActivity() {
             .beginTransaction()
             .replace(R.id.fragment_holder, editorFragment, "EDITOR")
             .commit()
-    }
-
-    private fun openDexter() {
-        Dexter.withContext(this)
-            .withPermission(Manifest.permission.BLUETOOTH)
-            .withListener(object : PermissionListener {
-                override fun onPermissionGranted(response: PermissionGrantedResponse) { /* ... */
-                }
-
-                override fun onPermissionDenied(response: PermissionDeniedResponse) { /* ... */
-                }
-
-                override fun onPermissionRationaleShouldBeShown(
-                    permission: PermissionRequest?,
-                    token: PermissionToken?
-                ) { /* ... */
-                }
-            }).check()
     }
 
     private fun getValuesForUpdateDelete() {
@@ -193,30 +196,33 @@ class MainActivity : AppCompatActivity() {
                     } else {
                         Toast.makeText(this, "No Printer Device Connected", Toast.LENGTH_SHORT)
                             .show()
-                        val printStr = html.replace("<p class=\"ql-align-center\">", "            ")
-                            .replace("<p class=\"ql-align-right\">", " [R]")
-                            .replace("class=\"ql-size-large\"", "size='big'")
-                            .replace("class=\"ql-size-huge\"", "size='tall'")
+
+                        val printStr = html
+                            .replace("<p class=\"ql-align-center\">", "[C]")
+                            .replace("<p class=\"ql-align-right\">", "[R]")
+                            .replace("<span class=\"ql-size-huge\">", "<font size='big'>")
                             .replace("strong", "b")
+                            .replace("<span class=\"ql-size-large\">", "<font size='tall'>")
                             .replace("<p>", "")
-                            .replace("span", "font")
+                            .replace("</span>", "</font>")
                             .replace("</p>", "\n")
-                            .replace("<br>", "\n")
-                        Log.d("TAG", printStr + "\n\n" + html)
+                            .replace("<br>", "")
+
+                        Log.d("TAG","$printStr\n\n$html")
                     }
                 }
                 true
             }
             R.id.action_findPrinter -> {
-                if (!isPermissionAllow) {
+                if (!isPermissionAllow || !mBluetoothAdapter.isEnabled) {
                     val snack = Snackbar.make(
                         window.decorView,
                         "Bluetooth permissions is not granted",
                         Snackbar.LENGTH_LONG
                     )
-                    snack.setAction("Allow", View.OnClickListener {
-                        initializeBluetoothOrRequestPermission()
-                    })
+                    /*snack.setAction("Allow", View.OnClickListener {
+
+                    })*/
                     snack.show()
                 } else if (!isPrinterConnect && isPermissionAllow) {
                     browseBluetoothDevice()
@@ -271,14 +277,14 @@ class MainActivity : AppCompatActivity() {
 
     private fun deleteNote() {
         val builder = AlertDialog.Builder(this)
-        builder.setTitle("Alert")
+        builder.setTitle("Alert!")
         builder.setMessage("Are you sure you want to delete it?")
 
         val updatedNote =
             NoteModel(toolbarTitle.toString(), noteDescription.toString(), noteDate.toString())
         updatedNote.id = noteID
 
-        builder.setPositiveButton(Html.fromHtml("<font color='#FF7F27'>Yes</font>")) { dialog, which ->
+        builder.setPositiveButton(Html.fromHtml("<font color='#228B22'>Yes</font>")) { dialog, which ->
             viewModal.deleteNote(updatedNote)
             Toast.makeText(this, "Note Deleted", Toast.LENGTH_LONG).show()
             startActivity(Intent(this, NoteListActivity::class.java))
@@ -308,46 +314,8 @@ class MainActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
     }
 
-    @RequiresApi(Build.VERSION_CODES.M)
-    private fun initializeBluetoothOrRequestPermission() {
-        val requiredPermissions = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
-            listOf(Manifest.permission.ACCESS_FINE_LOCATION)
-        } else {
-            listOf(Manifest.permission.BLUETOOTH_CONNECT, Manifest.permission.BLUETOOTH_SCAN)
-        }
-
-        val missingPermissions = requiredPermissions.filter { permission ->
-            checkSelfPermission(permission) != PackageManager.PERMISSION_GRANTED
-        }
-        if (missingPermissions.isEmpty()) {
-            initializeBluetooth()
-        } else {
-            requestPermissions(missingPermissions.toTypedArray(), BLUETOOTH_PERMISSION_REQUEST_CODE)
-        }
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        when (requestCode) {
-            BLUETOOTH_PERMISSION_REQUEST_CODE -> {
-                if (grantResults.none { it != PackageManager.PERMISSION_GRANTED }) {
-                    // all permissions are granted
-                    initializeBluetooth()
-                } else {
-                    // some permissions are not granted
-                    Toast.makeText(this, "permissions are not granted", Toast.LENGTH_SHORT).show()
-                }
-            }
-            else -> super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        }
-    }
-
     @SuppressLint("MissingPermission")
     private fun initializeBluetooth() {
-        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
         if (!mBluetoothAdapter.isEnabled) {
             val enableBluetooth = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
             startActivityForResult(enableBluetooth, 0)
@@ -373,13 +341,7 @@ class MainActivity : AppCompatActivity() {
                 items[++i] = device.device.name
             }
             val alertDialog = android.app.AlertDialog.Builder(this@MainActivity)
-            alertDialog.setTitle("Bluetooth printer selection")
-
-            Toast.makeText(
-                this,
-                "If your Print device not found, click Find Printer",
-                Toast.LENGTH_LONG
-            ).show()
+            alertDialog.setTitle("Bluetooth Printer Selection")
 
             alertDialog.setItems(
                 items
@@ -395,7 +357,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-            alertDialog.setPositiveButton(Html.fromHtml("<font color='#FF7F27'>Find Printer</font>")) { dialog, which ->
+            alertDialog.setPositiveButton(Html.fromHtml("<font color='#228B22'>Find Printer</font>")) { dialog, which ->
                 startActivity(Intent(android.provider.Settings.ACTION_BLUETOOTH_SETTINGS));
             }
 
@@ -406,19 +368,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun printBluetooth(html: String) {
-        if (ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.BLUETOOTH
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-
-        }
-        else if (ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.BLUETOOTH_ADMIN
-            ) != PackageManager.PERMISSION_GRANTED
-        )
-        else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && ContextCompat.checkSelfPermission(
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && ContextCompat.checkSelfPermission(
                 this,
                 Manifest.permission.BLUETOOTH_CONNECT
             ) != PackageManager.PERMISSION_GRANTED
@@ -426,6 +376,10 @@ class MainActivity : AppCompatActivity() {
         else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && ContextCompat.checkSelfPermission(
                 this,
                 Manifest.permission.BLUETOOTH_SCAN
+            ) != PackageManager.PERMISSION_GRANTED
+        ) else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.BLUETOOTH_ADVERTISE
             ) != PackageManager.PERMISSION_GRANTED
         ) else {
             AsyncBluetoothEscPosPrint(
@@ -459,36 +413,39 @@ class MainActivity : AppCompatActivity() {
         html: String
     ): AsyncEscPosPrinter? {
 
-        val printStr = html.replace("<p class=\"ql-align-center\">", "         ")
-            .replace("<p class=\"ql-align-right\">", " [R]")
-            .replace("class=\"ql-size-large\"", "size='tall'")
-            .replace("class=\"ql-size-huge\"", "size='big'")
+        val printStr = html
+            .replace("<p class=\"ql-align-center\">", "[C]")
+            .replace("<p class=\"ql-align-right\">", "[R]")
+            .replace("<span class=\"ql-size-huge\">", "<font size='big'>")
             .replace("strong", "b")
-            .replace("<p>", "[L]")
-            .replace("span", "font")
-            .replace("</p>", "\n[L]")
-            .replace("<br>", "\n[L]")
+            .replace("<span class=\"ql-size-large\">", "<font size='tall'>")
+            .replace("<p>", "")
+            .replace("</span>", "</font>")
+            .replace("</p>", "\n")
+            .replace("<br>", "")
 
-        val sdf = SimpleDateFormat("dd/MM/yyyy hh:mm:ss")
+        val sdf = SimpleDateFormat("dd/MM/yyyy")
         val currentDate = sdf.format(Date())
         val printer = AsyncEscPosPrinter(printerConnection, 203, 48f, 32)
         return printer.addTextToPrint(
+            "[L]$noteTitle   $currentDate\n"+
             "$printStr"
         )
     }
 
-    /*override fun onBackPressed() {
+    override fun onBackPressed() {
         val builder = AlertDialog.Builder(this)
-        builder.setTitle("Alert")
-        builder.setMessage("Are you sure you want to delete it?")
+        builder.setTitle("Alert!")
+        builder.setMessage("Are you sure you want to exit without $alertMsg it?")
 
-        builder.setPositiveButton(Html.fromHtml("<font color='#FF7F27'>Yes</font>")) { dialog, which ->
-
+        builder.setPositiveButton(Html.fromHtml("<font color='#228B22'>Yes</font>")) { dialog, which ->
+            super.onBackPressed()
+            finish()
         }
 
         builder.setNegativeButton("No") { dialog, which ->
             builder.setCancelable(true)
         }
         builder.show()
-    }*/
+    }
 }

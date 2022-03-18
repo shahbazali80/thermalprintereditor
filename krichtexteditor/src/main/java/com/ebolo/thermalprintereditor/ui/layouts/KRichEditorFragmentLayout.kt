@@ -316,7 +316,7 @@ class KRichEditorFragmentLayout : AnkoComponent<KRichEditorFragment> {
 
                                                     click = MenuItem.OnMenuItemClickListener {
                                                         onMenuButtonClicked(SIZE,  when (it.itemId) {
-                                                            R.id.font_size_small -> "small"
+                                                            ///R.id.font_size_small -> "small"
                                                             R.id.font_size_large -> "large"
                                                             R.id.font_size_huge -> "huge"
                                                             else -> ""
@@ -353,7 +353,7 @@ class KRichEditorFragmentLayout : AnkoComponent<KRichEditorFragment> {
                                             justifyButton(JUSTIFY_LEFT, R.drawable.ic_format_align_left)
                                             justifyButton(JUSTIFY_CENTER, R.drawable.ic_format_align_center, true)
                                             justifyButton(JUSTIFY_RIGHT, R.drawable.ic_format_align_right, true)
-                                            justifyButton(JUSTIFY_FULL, R.drawable.ic_format_align_justify, true)
+                                            //justifyButton(JUSTIFY_FULL, R.drawable.ic_format_align_justify, true)
 
                                         }.lparams(width = matchParent, height = dip(46))
 
@@ -376,9 +376,9 @@ class KRichEditorFragmentLayout : AnkoComponent<KRichEditorFragment> {
                                                     .apply { actionImageViewStyle() })
 
                                             formatButton(BOLD, R.drawable.ic_format_bold)
-                                            formatButton(ITALIC, R.drawable.ic_format_italic)
+                                            //formatButton(ITALIC, R.drawable.ic_format_italic)
                                             formatButton(UNDERLINE, R.drawable.ic_format_underlined)
-                                            formatButton(STRIKETHROUGH, R.drawable.ic_format_strikethrough)
+                                            //formatButton(STRIKETHROUGH, R.drawable.ic_format_strikethrough)
 
                                         }.lparams(width = matchParent, height = dip(46)) { topMargin = dip(8) }
 

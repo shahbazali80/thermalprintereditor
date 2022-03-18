@@ -1,9 +1,7 @@
-package com.example.thermalprinter.adapter
+package com.ebolo.thermalprinter.adapter
 
 import android.app.AlertDialog
-import android.app.Application
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.text.Html
 import android.view.LayoutInflater
@@ -12,7 +10,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.ebolo.thermalprinter.MainActivity
@@ -21,7 +18,10 @@ import com.ebolo.thermalprinter.R
 import com.ebolo.thermalprinter.models.NoteModel
 import com.ebolo.thermalprinter.viewmodel.NoteViewModel
 
-class NoteAdapter(val context: Context) : RecyclerView.Adapter<NoteAdapter.ViewHolder>() {
+class NoteAdapter(
+    val context: Context,
+    private val noteClickInterface: NoteClickInterface
+    ) : RecyclerView.Adapter<NoteAdapter.ViewHolder>() {
 
     private var allNotes = ArrayList<NoteModel>()
 
@@ -63,18 +63,18 @@ class NoteAdapter(val context: Context) : RecyclerView.Adapter<NoteAdapter.ViewH
         }
 
         holder.idImgEdit.setOnClickListener {
-
+            noteClickInterface.onNoteClick(allNotes[position])
         }
 
         holder.idImgDel.setOnClickListener {
             val builder = AlertDialog.Builder(context)
-            builder.setTitle("Alert")
+            builder.setTitle("Alert!")
             builder.setMessage("Are you sure you want to delete it?")
 
             val updatedNote = NoteModel(title, desc, noteDate)
             updatedNote.id = id
 
-            builder.setPositiveButton(Html.fromHtml("<font color='#FF7F27'>Yes</font>")) { dialog, which ->
+            builder.setPositiveButton(Html.fromHtml("<font color='#228B22'>Yes</font>")) { dialog, which ->
                 viewModal.deleteNote(updatedNote)
                 Toast.makeText(context, "Note Deleted", Toast.LENGTH_LONG).show()
             }
@@ -93,5 +93,9 @@ class NoteAdapter(val context: Context) : RecyclerView.Adapter<NoteAdapter.ViewH
     fun setList(newList: List<NoteModel>) {
         allNotes= newList as ArrayList<NoteModel>
         notifyDataSetChanged()
+    }
+
+    interface NoteClickInterface {
+        fun onNoteClick(note: NoteModel)
     }
 }

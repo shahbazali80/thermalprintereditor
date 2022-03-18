@@ -21,7 +21,12 @@
         <entry key="..\:/Shahbaz/KRichEditor/krichtexteditor/src/main/res/drawable-v21/btn_white_material.xml" value="0.226" />
         <entry key="..\:/Shahbaz/KRichEditor/krichtexteditor/src/main/res/drawable/round_rectangle_blue.xml" value="0.226" />
         <entry key="..\:/Shahbaz/KRichEditor/krichtexteditor/src/main/res/menu/font_sizes_menu.xml" value="0.36666666666666664" />
+        <entry key="..\:/Shahbaz/Thermal Printer/app/src/main/res/drawable/ic_baseline_local_printshop_24.xml" value="0.238" />
+        <entry key="..\:/Shahbaz/Thermal Printer/app/src/main/res/drawable/ic_printer_black.xml" value="0.238" />
         <entry key="..\:/Shahbaz/Thermal Printer/app/src/main/res/layout/activity_note_list.xml" value="0.36666666666666664" />
+        <entry key="..\:/Shahbaz/Thermal Printer/app/src/main/res/layout/edit_toolbar_dialog.xml" value="0.36666666666666664" />
+        <entry key="..\:/Shahbaz/Thermal Printer/app/src/main/res/layout/note_layout.xml" value="0.36666666666666664" />
+        <entry key="..\:/Shahbaz/Thermal Printer/app/src/main/res/menu/menu_main_printer.xml" value="0.36666666666666664" />
         <entry key="..\:/Shahbaz/Thermal Printer/krichtexteditor/src/main/res/menu/font_sizes_menu.xml" value="0.36666666666666664" />
       </map>
     </option>

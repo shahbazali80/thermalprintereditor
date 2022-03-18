@@ -25,6 +25,7 @@
         <menu>
 
             <item android:id="@+id/action_findPrinter"
+                android:icon="@drawable/ic_printer_black"
                 android:title="@string/find_printer"
                 app:showAsAction="never"/>
 
